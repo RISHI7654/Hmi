@@ -1,60 +1,72 @@
 import requests
+import time
 
-# Access Token (Facebook Graph API token)
-access_token = 'YOUR_ACCESS_TOKEN'
+# Indra Logo
+def print_logo():
+    logo = """
+    ███████╗███╗   ██╗██████╗ ██████╗  █████╗
+    ██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔══██╗
+    █████╗  ██╔██╗ ██║██║  ██║██║  ██║███████║
+    ██╔══╝  ██║╚██╗██║██║  ██║██║  ██║██╔══██║
+    ███████╗██║ ╚████║██████╔╝██████╔╝██║  ██║
+    ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═════╝ ╚═╝  ╚═╝
+    """
+    print(logo)
 
-# Post ID (The post ID where you want to comment, react, etc.)
-post_id = 'YOUR_POST_ID'
+# Facebook Access Token (Replace with your actual token)
+access_token = input("Enter your Facebook Access Token: ")
+post_id = input("Enter the Post ID: ")
 
 # Function to post a comment
 def post_comment(post_id, comment):
     url = f'https://graph.facebook.com/{post_id}/comments'
     data = {'message': comment, 'access_token': access_token}
     response = requests.post(url, data=data)
+    
     if response.status_code == 200:
-        print("Comment posted successfully!")
+        print("✅ Comment posted successfully!")
     else:
-        print(f"Failed to post comment: {response.text}")
+        print(f"❌ Failed to post comment: {response.text}")
 
 # Function to add a reaction (LIKE, LOVE, WOW, HAHA, SAD, ANGRY)
 def add_reaction(post_id, reaction_type):
     url = f'https://graph.facebook.com/{post_id}/reactions'
     data = {'type': reaction_type, 'access_token': access_token}
     response = requests.post(url, data=data)
+    
     if response.status_code == 200:
-        print(f"Reacted with {reaction_type}!")
+        print(f"✅ Reacted with {reaction_type}!")
     else:
-        print(f"Failed to react: {response.text}")
+        print(f"❌ Failed to react: {response.text}")
 
-# Function to vote on a poll (replace the poll ID)
+# Function to vote on a poll
 def vote_poll(poll_id, option_id):
     url = f'https://graph.facebook.com/{poll_id}/votes'
     data = {'option': option_id, 'access_token': access_token}
     response = requests.post(url, data=data)
+    
     if response.status_code == 200:
-        print(f"Voted successfully on the poll!")
+        print(f"✅ Voted successfully on the poll!")
     else:
-        print(f"Failed to vote: {response.text}")
+        print(f"❌ Failed to vote: {response.text}")
 
 # Function to share a post
 def share_post(post_id):
     url = f'https://graph.facebook.com/{post_id}/sharedposts'
     data = {'access_token': access_token}
     response = requests.post(url, data=data)
+    
     if response.status_code == 200:
-        print("Post shared successfully!")
+        print("✅ Post shared successfully!")
     else:
-        print(f"Failed to share post: {response.text}")
+        print(f"❌ Failed to share post: {response.text}")
+
+# Print logo and run functions
+print_logo()
+time.sleep(1)
 
 # Example usage
-# Commenting on the post
-post_comment(post_id, "This is an automated comment!")
-
-# Reacting with "LOVE"
+post_comment(post_id, "🔥 This is an automated comment by Indra Script!")
 add_reaction(post_id, "LOVE")
-
-# Voting on a poll (Example: poll_id and option_id should be actual IDs)
-vote_poll('POLL_ID', 'OPTION_ID')
-
-# Sharing the post
+vote_poll('POLL_ID', 'OPTION_ID')  # Replace with actual poll & option ID
 share_post(post_id)
